@@ -81,6 +81,7 @@ public class Saml2Settings {
 	private Organization organization = null;
 
 	private boolean spValidationOnly = false;
+	private String uniqueIdentifierAttributeName = null;
 	
 	/**
 	 * @return the strict setting value
@@ -914,6 +915,14 @@ public class Saml2Settings {
 		return this.spValidationOnly;
 	}
 	
+	public String getUniqueIdentifierAttributeName() {
+		return uniqueIdentifierAttributeName;
+	}
+
+	public void setUniqueIdentifierAttributeName(String uniqueIdentifierAttributeName) {
+		this.uniqueIdentifierAttributeName = uniqueIdentifierAttributeName;
+	}
+
 	/**
 	 * Gets the SP metadata. The XML representation.
 	 *

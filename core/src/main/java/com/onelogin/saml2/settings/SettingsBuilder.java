@@ -57,6 +57,7 @@ public class SettingsBuilder {
 
 	public final static String SP_X509CERT_PROPERTY_KEY = "onelogin.saml2.sp.x509cert";
 	public final static String SP_PRIVATEKEY_PROPERTY_KEY = "onelogin.saml2.sp.privatekey";
+	public final static String UNIQUE_IDENTIFIER_ATTRIBUTE_NAME_KEY = "onelogin.attribute.unique_identifier";
 
 	// IDP
 	public final static String IDP_ENTITYID_PROPERTY_KEY = "onelogin.saml2.idp.entityid";
@@ -394,6 +395,10 @@ public class SettingsBuilder {
 		PrivateKey spPrivateKey = loadPrivateKeyFromProp(SP_PRIVATEKEY_PROPERTY_KEY);
 		if (spPrivateKey != null)
 			saml2Setting.setSpPrivateKey(spPrivateKey);
+		
+		String uniqueIdentifierAttributeName = loadStringProperty(UNIQUE_IDENTIFIER_ATTRIBUTE_NAME_KEY);
+		if (uniqueIdentifierAttributeName != null)
+			saml2Setting.setUniqueIdentifierAttributeName(uniqueIdentifierAttributeName);
 	}
 
 	/**

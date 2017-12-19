@@ -390,4 +390,11 @@ public class Saml2SettingsTest {
 		assertFalse(errors.isEmpty());
 		assertTrue(errors.contains("expired_xml"));
 	}
+	
+	@Test
+	public void testValidateUniqueAttributeName() throws Exception {
+		Saml2Settings settings = new SettingsBuilder().fromFile("config/config.min.properties").build();
+
+		assertEquals(settings.getUniqueIdentifierAttributeName(), "some-saml2-attribute-name");
+	}
 }
