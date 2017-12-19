@@ -289,9 +289,11 @@ public class Auth {
 		lastRequestId = authnRequest.getId();
 		lastRequest = authnRequest.getAuthnRequestXml();
 
-		if (!stay) {
-			LOGGER.debug("AuthNRequest sent to " + ssoUrl + " --> " + samlRequest);
+		LOGGER.debug("AuthNRequest sent to " + ssoUrl + " --> " + samlRequest);
+		for(String key : parameters.keySet()) {
+			LOGGER.debug(key + ": " + parameters.get(key));
 		}
+		
 		return ServletUtils.sendRedirect(response, ssoUrl, parameters, stay);
 	}
 

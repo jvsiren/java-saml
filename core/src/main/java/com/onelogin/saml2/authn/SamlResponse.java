@@ -1,6 +1,7 @@
 package com.onelogin.saml2.authn;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -10,6 +11,11 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.joda.time.DateTime;
@@ -556,9 +562,30 @@ public class SamlResponse {
 			if (responseStatus.getStatusMessage() != null) {
 				statusExceptionMsg += " -> " + responseStatus.getStatusMessage();
 			}
+			LOGGER.error(getStringFromDocument(samlResponseDocument));
 			throw new ValidationError(statusExceptionMsg, ValidationError.STATUS_CODE_IS_NOT_SUCCESS);
 		}
 	}
+	
+	private String getStringFromDocument(Document doc)
+	{
+	    try
+	    {
+	       DOMSource domSource = new DOMSource(doc);
+	       StringWriter writer = new StringWriter();
+	       StreamResult result = new StreamResult(writer);
+	       TransformerFactory tf = TransformerFactory.newInstance();
+	       Transformer transformer = tf.newTransformer();
+	       transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	       transformer.transform(domSource, result);
+	       return writer.toString();
+	    }
+	    catch(Exception ex)
+	    {
+	       ex.printStackTrace();
+	       return null;
+	    }
+	} 
 
 	/**
 	 * Get Status from a Response
